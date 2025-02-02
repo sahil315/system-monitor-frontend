@@ -20,7 +20,7 @@ console.log('layout ' + layout)
   }, []);
 
   useEffect(() => {
-    const eventSource = new EventSource("http://192.168.29.85:5000/stream");
+    const eventSource = new EventSource("https://system-monitor-backend.onrender.com/stream");
 
     eventSource.onmessage = (event) => {
       try {
