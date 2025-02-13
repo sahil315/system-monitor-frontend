@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 // Full Page Container
 export const AppContainer = styled.div`
-  display: flex;
+  // display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   background: #121827;
 `;

@@ -88,7 +88,7 @@ const RAMSSD = ({ stats, layout }) => {
       <StatsContainer>
         <Title>Drives:</Title>
         <DrivesContainerCard>
-          {stats?.drives.map((drive, index) => (
+          {stats?.drives?.map((drive, index) => (
             <>
             <DrivesInnerCard key={index}>
               {/* SSD Image */}
@@ -97,7 +97,7 @@ const RAMSSD = ({ stats, layout }) => {
               </ImageContainer>
               <DrivesVolumeCard>
                 {/* SSD Partitions */}
-                {drive.partitions.map((partition, pIndex) => {
+                {drive?.partitions?.map((partition, pIndex) => {
                   const usedPercentage = (parseFloat(partition.used) / parseFloat(partition.total)) * 100;
 
                   // Determine color based on usage percentage

@@ -6,6 +6,7 @@ import { GaugeComponent } from 'react-gauge-component';
 
 const TopBar = ({ stats, layout }) => {
   const [fps, setFps] = useState(0);
+  console.log("📡 stats data:", stats);
 
   useEffect(() => {
     let lastFrameTime = performance.now();
@@ -79,7 +80,7 @@ const TopBar = ({ stats, layout }) => {
               }
             }
           }}
-          value={convertSpeedToKbps(stats?.network.received)} // Convert received speed to KB/s
+          value={convertSpeedToKbps(stats?.network?.received)} // Convert received speed to KB/s
           maxValue={100000} // Adjusted to 100 MB/s
         />
       </LeftStats>
