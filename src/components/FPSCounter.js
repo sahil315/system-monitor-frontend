@@ -3,8 +3,9 @@ import styled from "styled-components";
 import { Card, StatItem } from "../styles";
 
 const FPSCounter = ({ stats, layout }) => {
+  
   return (
-    <Card layout={layout}>
+    <Card >
       <h2>FPS Counter</h2>
       <StatItem>
         <strong>Current FPS:</strong> {stats.fps || "0"}

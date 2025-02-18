@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import topBarImage from "../assets/top.png";
-import FPSStats from "react-fps-stats";
+import topBarImage from "../assets/noun-router.svg";
+// import FPSStats from "react-fps-stats";
 import { GaugeComponent } from 'react-gauge-component';
+import NetworkSpeedGraph from "./NetworkSpeedGraph";
+import FanSVG from './../assets/FanSVG'
+import FPSMonitor from './FPSMonitor';
+import MonitorUI  from './MonitorUI';
+
 
 const TopBar = ({ stats, layout }) => {
   const [fps, setFps] = useState(0);
+  //console.log("📡 stats data:", stats?.network?.sent);
 
   useEffect(() => {
     let lastFrameTime = performance.now();
@@ -49,13 +55,16 @@ const TopBar = ({ stats, layout }) => {
       return kbps.toFixed(0) + " KB/s"; // Keep in KB/s
     }
   };
+  const gpuFanSpeed = parseFloat(stats?.gpu?.fan_rpm?.find(f => f.name === "GPU Fan")?.value) || 0;
+  const cpuFanSpeed = parseFloat(stats?.motherboard?.fans?.[0]?.value) || 0;
+  //console.log('stats?.network ' + JSON.stringify(stats?.network))
   return (
     <TopBarContainer>
       {/* Left Stats */}
       <LeftStats>
         {/* <p><strong>Download:</strong> {stats?.network.received} || {stats?.network.downloaded}</p>
         <p><strong>Upload:</strong> {stats?.network.sent} || {stats?.network.uploaded}</p> */}
-        <GaugeComponent
+        {/* <GaugeComponent
           arc={{
             nbSubArcs: 150,
             colorArray: ['#5BE12C', '#F5CD19', '#EA4228'], // Green, Yellow, Red
@@ -79,20 +88,61 @@ const TopBar = ({ stats, layout }) => {
               }
             }
           }}
-          value={convertSpeedToKbps(stats?.network.received)} // Convert received speed to KB/s
+          value={convertSpeedToKbps(stats?.network?.received)} // Convert received speed to KB/s
           maxValue={100000} // Adjusted to 100 MB/s
-        />
-      </LeftStats>
+        /> */}
+        <NetworkContainer>
+          <NetworkSpeedGraph
+            dataProp={{
+              speed1: stats?.network?.received, 
+              speed2: stats?.network?.sent 
+            }} 
+            type="network"
+          />
+          <NetworkGrid>
+            <FanLabel style={{color: "#ff007f"}}>d:</FanLabel>
+            <FanValue style={{color: "#ff007f"}}>{stats?.network?.received} </FanValue>
+            <FanLabel style={{color: "#00ffff"}}>u:</FanLabel>
+            <FanValue style={{color: "#00ffff"}}>{stats?.network?.sent} </FanValue>
+          </NetworkGrid>
+        </NetworkContainer>
+        
+        <FanContainer>
+          {/* <FanTitle>FAN</FanTitle>
+          <FanGrid>
+            <FanLabel>CPU</FanLabel>
+            <FanLabel>GPU</FanLabel>
+            <FanValue>{cpuFanSpeed} RPM</FanValue>
+            <FanValue>{gpuFanSpeed} RPM</FanValue>
+          </FanGrid> */}
+          <FanGrid>
+            <FanInnerGrid>
+              <FanTitle>CPU Fans</FanTitle>
+              <FanSVG speed={cpuFanSpeed} />
+              <FanValue>{cpuFanSpeed} RPM</FanValue>
+            </FanInnerGrid>
+            <FanInnerGrid>
+            <FanTitle>GPU Fans</FanTitle>
+              <FanSVG speed={gpuFanSpeed} />
+              <FanValue>{gpuFanSpeed} RPM</FanValue>
+            </FanInnerGrid>
+          </FanGrid> 
+        </FanContainer>
+      </LeftStats>        
+
 
       {/* Network Image in Center */}
-      <ImageWrapper>
+      {/* <ImageWrapper>
         <img className="top-image" src={topBarImage} alt="Top Bar" />
-      </ImageWrapper>
+      </ImageWrapper> */}
 
       {/* Right Stats */}
       <RightStats>
-        <p><strong>FPS:</strong> {fps}</p>
-        <p><strong>Uptime:</strong> {Math.floor(stats?.uptime / 60)} min</p>
+      {/* <FPSMonitor   /> */}
+
+      <MonitorUI resolution="2560 x 1440" refreshRate="144 Hz" audioLevel={58} />
+        {/* <p><strong>FPS:</strong> {fps}</p>
+        <p><strong>Uptime:</strong> {Math.floor(stats?.uptime / 60)} min</p> */}
       </RightStats>
     </TopBarContainer>
   );
@@ -110,6 +160,18 @@ const TopBarContainer = styled.div`
   width: 100%;
 `;
 
+const NetworkGrid = styled.div`
+    display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+  justify-items:center;
+  width: 80%;
+    justify-self: end;
+`;
+const NetworkContainer = styled.div`
+  width:300px;
+`;
+
 // Image in the Center
 const ImageWrapper = styled.div`
   flex-grow: 1;
@@ -123,8 +185,9 @@ const ImageWrapper = styled.div`
 // Stats on Left
 const LeftStats = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: flex-start;
+  align-items: center;
 `;
 
 // Stats on Right
@@ -133,5 +196,48 @@ const RightStats = styled.div`
   flex-direction: column;
   align-items: flex-end;
 `;
+
+const FanContainer = styled.div`
+  display: flex;
+  margin: 0px 20px;
+    min-width: 350px;
+  min-height: 150px;
+  flex-direction: column;
+  align-items: center;
+  background: #1a2433;
+  padding: 10px;
+  border-radius: 8px;
+  // width: 100px; /* Small box */
+  text-align: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+`;
+
+const FanTitle = styled.div`
+  font-size: 14px;
+  font-weight: bold;
+  color: #ff007f;
+  margin-bottom: 5px;
+`;
+
+const FanInnerGrid = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const FanGrid = styled.div`
+  display: flex;
+`;
+
+const FanLabel = styled.div`
+  font-size: 12px;
+  color: #00ffff;
+  font-weight: bold;
+`;
+
+const FanValue = styled.div`
+  font-size: 12px;
+  color: #ffffff;
+`;
+
 
 export default TopBar;
