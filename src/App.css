@@ -1,3 +1,5 @@
+
+
 .App {
   text-align: center;
 }
@@ -12,7 +14,22 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
+.fpsCounter{
+    z-index: 999999;
+    position: unset!important;
+    height: auto!important;
+    width: auto!important;
+    padding: 3px!important;
+    background-color: transparent!important;
+    color: rgb(0, 255, 255)!important;
+    font-size: 18px!important;
+    line-height: 8px!important;
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    box-sizing: border-box;
+    pointer-events: none;
+    inset: 0px auto auto 0px;
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
