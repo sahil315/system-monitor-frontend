@@ -1,3 +1,4 @@
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -18,4 +19,18 @@ code {
 .top-image{
   height: 200px;
   width: 200px;
+}
+/* .Leftimage{
+  width: 100%;
+  min-width: 200px;
+  height: 200px;
+  min-height: 200px;
+} */
+.ssdGauge{
+  width: 250px;
+}
+.cpu-gauge-compon{
+  width: 300px;
+  /* display: block; */
+  height: 200px;
 }

@@ -1,68 +1,68 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import { AppContainer, DashboardContainer, TopBarStyle, ToggleButton, ContentContainer } from "./styles";
+import React, { useState, useEffect } from "react";
+import { AppContainer, DashboardContainer, TopBarStyle, ToggleButton, ContentContainer, LoadingContainer, StatusText } from "./styles";
 import CPU from "./components/CPU";
 import GPU from "./components/GPU";
 import RAMSSD from "./components/RAMSSD";
 import Motherboard from "./components/Motherboard";
 import TopBar from "./components/TopBar";
+import styled, { keyframes } from "styled-components";
+import LoadingSpinner from "./assets/loading.svg";
 
 const API_URL = process.env.REACT_APP_API_URL;
 const API_KEY = process.env.REACT_APP_API_KEY;
 
+// 🔄 Rotating animation for loading
+const rotate = keyframes`
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+`;
+
+// 🔄 Styled Loading Indicator
+// const LoadingSpinner = styled.div`
+//   border: 5px solid rgba(255, 255, 255, 0.2);
+//   border-top: 5px solid #ffffff;
+//   border-radius: 50%;
+//   width: 50px;
+//   height: 50px;
+//   animation: ${rotate} 1s linear infinite;
+//   margin: auto;
+// `;
+
 const App = () => {
-  const [layout, setLayout] = useState(() => (window.innerWidth > window.innerHeight ? "landscape" : "portrait"));
+  const [layout, setLayout] = useState("landscape");
   const [stats, setStats] = useState(null);
+  const [connectionStatus, setConnectionStatus] = useState("Connecting...");
   const [socket, setSocket] = useState(null);
-  const layoutRef = useRef(layout); // 🔥 Store layout in a ref to prevent unnecessary updates
 
-  console.log("Current Layout:", layout);
-  console.log("API URL:", API_URL);
-  console.log("API Key:", API_KEY);
-
-  // ✅ Fix ResizeObserver Loop (Throttle + Check for Actual Change)
   useEffect(() => {
-    let resizeTimeout;
-
     const updateLayout = () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(() => {
-        const newLayout = window.innerWidth > window.innerHeight ? "landscape" : "portrait";
-
-        if (layoutRef.current !== newLayout) { // ✅ Only update if changed
-          layoutRef.current = newLayout;
-          setLayout(newLayout);
-        }
-      }, 200); // ✅ Throttle resize event
+      setLayout(window.innerWidth > window.innerHeight ? "landscape" : "portrait");
     };
-
     window.addEventListener("resize", updateLayout);
-    return () => {
-      window.removeEventListener("resize", updateLayout);
-      clearTimeout(resizeTimeout);
-    };
+    updateLayout();
+    return () => window.removeEventListener("resize", updateLayout);
   }, []);
 
-  // ✅ Efficient WebSocket Connection for Real-time Updates
+  // ✅ WebSocket Connection with Reconnect & Status Handling
   useEffect(() => {
     let ws;
 
     const connectWebSocket = () => {
+      setConnectionStatus("Connecting...");
+
       ws = new WebSocket(`wss://api.pcstats.site`);
 
       ws.onopen = () => {
         console.log("✅ WebSocket connected.");
-        ws.send(JSON.stringify({ api_key: API_KEY })); // Authenticate WebSocket
+        setConnectionStatus("Connected.");
+        ws.send(JSON.stringify({ api_key: API_KEY })); // Send API key for authentication
       };
 
       ws.onmessage = (event) => {
         try {
           const newData = JSON.parse(event.data);
           console.log("📡 Received WebSocket data:", newData);
-
-          setStats(prevStats => ({
-            ...prevStats,  // Keep old values
-            ...newData     // Merge updated values
-          }));
+          setStats((prevStats) => ({ ...prevStats, ...newData })); // Merge new values
         } catch (error) {
           console.error("❌ Error parsing WebSocket data:", error);
         }
@@ -70,39 +70,37 @@ const App = () => {
 
       ws.onerror = (error) => {
         console.error("❌ WebSocket error:", error);
+        setConnectionStatus("Error! Reconnecting...");
       };
 
       ws.onclose = (event) => {
         console.warn("⚠️ WebSocket closed. Reconnecting in 5s...", event.reason);
-        setTimeout(connectWebSocket, 5000); // Reconnect after 5 seconds
+        setConnectionStatus("Reconnecting...");
+        setTimeout(connectWebSocket, 5000);
       };
-
-      setSocket(ws);
     };
 
     connectWebSocket();
-
-    return () => {
-      if (ws) ws.close();
-    };
+    setSocket(ws);
+    return () => ws.close();
   }, []);
 
-  // ✅ Fix Scrollbar Overflow (Prevent Infinite Resizing)
-  const toggleLayout = useCallback(() => {
-    setLayout(prevLayout => {
-      const newLayout = prevLayout === "landscape" ? "portrait" : "landscape";
-      layoutRef.current = newLayout; // ✅ Update ref to prevent loop
-      return newLayout;
-    });
-  }, []);
-
-  if (!stats) return <h2 style={{ color: "white", textAlign: "center" }}>Loading...</h2>;
+  console.log('stats43 ', JSON.stringify(stats))
+  if (!stats) {
+    return (
+      <LoadingContainer>
+        {/* <LoadingSpinner /> */}
+        <img className="Leftimage" src={LoadingSpinner} alt="GPU" />
+        <StatusText>{connectionStatus}</StatusText>
+      </LoadingContainer>
+    );
+  }
 
   return (
     <AppContainer>
       <TopBarStyle>
         <TopBar stats={stats} layout={layout} />
-        <ToggleButton onClick={toggleLayout}>
+        <ToggleButton onClick={() => setLayout(layout === "landscape" ? "portrait" : "landscape")}>
           {layout === "landscape" ? "Portrait Mode" : "Landscape Mode"}
         </ToggleButton>
       </TopBarStyle>

@@ -41,7 +41,7 @@ export const DashboardContainer = styled.div`
   justify-content: center;
   align-items: center;
   flex-grow: 1;
-  padding: 20px;
+  // padding: 20px;
 `;
 
 // **Content Grid (Fixed 2 Cards Per Row)**
@@ -68,30 +68,30 @@ export const StatsGrid = styled.div`
   grid-template-rows: ${({ layout }) => (layout === "landscape" ? "1fr 1fr" : "repeat(4, 1fr)")};
 `;
 
-export const ImageContainer = styled.div`
-  width: ${({ layout }) => (layout === "landscape" ? "40%" : "40%")};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  img {
-    width: 80%;
-    max-width: 150px;
-  }
-`;
-export const RamCard = styled.div`
-  display: flex;
-  flex-direction: ${({ layout }) => (layout === "landscape" ? "column" : "column")};
-  align-items: center;
-  justify-content: space-between;
-  background: #1e1e1e;
-  width: 100%;
-  height: 100%;
-  padding: 15px;
-  border-radius: 10px;
-  border: 2px solid #ff007f;
-  box-shadow: 0px 0px 10px rgba(255, 0, 127, 0.5);
-  transition: all 0.3s ease-in-out;
-`;
+// export const ImageContainer = styled.div`
+//   width: ${({ layout }) => (layout === "landscape" ? "40%" : "40%")};
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   img {
+//     width: 80%;
+//     max-width: 150px;
+//   }
+// `;
+// export const RamCard = styled.div`
+//   display: flex;
+//   flex-direction: ${({ layout }) => (layout === "landscape" ? "column" : "column")};
+//   align-items: center;
+//   justify-content: space-between;
+//   background: #1e1e1e;
+//   width: 100%;
+//   height: 100%;
+//   padding: 15px;
+//   border-radius: 10px;
+//   border: 2px solid #ff007f;
+//   box-shadow: 0px 0px 10px rgba(255, 0, 127, 0.5);
+//   transition: all 0.3s ease-in-out;
+// `;
 
 export const DrivesInnerCard = styled.div`
   display: flex;
@@ -109,7 +109,22 @@ export const DrivesContainerCard = styled.div`
     grid-template-rows: 1fr 1fr;
   
 `;
+export const LoadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: white;
+  font-size: 18px;
+`;
 
+// 🔄 Connection Status Text
+export const StatusText = styled.p`
+  margin-top: 10px;
+  font-size: 16px;
+  color: #333;
+`;
 export const Card = styled.div`
   display: flex;
   flex-direction: ${({ layout }) => (layout === "landscape" ? "row" : "row")};
@@ -143,16 +158,16 @@ export const BoardContainerCard = styled.div`
   text-align: left;
   padding: 10px;
 `;
-export const StatsContainer = styled.div`
-  width: ${({ layout }) => (layout === "landscape" ? "100%" : "35%")};
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  align-items: center;
-  text-align: left;
-  padding: 10px;
-`;
+// export const StatsContainer = styled.div`
+//   width: ${({ layout }) => (layout === "landscape" ? "100%" : "35%")};
+//   display: flex;
+//   flex-direction: column;
+//   align-items: flex-start;
+//   justify-content: center;
+//   align-items: center;
+//   text-align: left;
+//   padding: 10px;
+// `;
 
 export const StatItem = styled.p`
   font-size: 14px;
@@ -199,3 +214,69 @@ export const BarFill = styled.div`
   width: ${({ value }) => value}%;
   transition: width 0.5s ease-in-out;
 `;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export const MainCard = styled.div`
+  width: ${({ layout }) => (layout === "landscape" ? "calc(100vw / 2 - 20px)" : "100%")};
+`;
+
+/* 🔹 Image Section (Left) */
+export const ImageContainer = styled.div`
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
+
+/* 🔹 Stats Section (Right) */
+export const StatsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 70%;
+  gap: 10px;
+`;
+
+/* 🔹 General Card Structure */
+export const SectionCard = styled.div`
+  display: flex;
+  background: #1a2433;
+  border-radius: 10px;
+  height: 100%;
+  width: ${({ layout }) => (layout === "landscape" ? "100%" : "100%")};
+  align-items: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  // padding: 20px;
+`;
+
+/* 🔹 Unique Cards for Each Section */
+export const GpuCard = styled(SectionCard)``;
+export const RamCard = styled.div`
+  display: flex;
+  background: #1a2433;
+  border-radius: 10px;
+  width: 100%;
+  height: 50%;
+  align-items: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  padding: 0px;
+`;
+
+export const SsdCard = styled(RamCard)``;
+
+export const CpuCard = styled(SectionCard)``;
+export const MotherboardCard = styled(SectionCard)``;

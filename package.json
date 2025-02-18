@@ -6,6 +6,8 @@
     "@coreui/coreui": "^5.2.0",
     "@coreui/react": "^5.4.1",
     "@next/env": "^15.1.7",
+    "@tailwindcss/vite": "^4.0.6",
+    "apexcharts": "^4.4.0",
     "axios": "^1.7.9",
     "chart.js": "^4.4.7",
     "cra-template": "1.2.0",
@@ -19,7 +21,9 @@
     "react-gauge-component": "^1.2.64",
     "react-google-charts": "^5.2.1",
     "react-scripts": "5.0.1",
+    "recharts": "^2.15.1",
     "styled-components": "^6.1.14",
+    "systeminformation": "^5.25.11",
     "web-vitals": "^4.2.4"
   },
   "scripts": {
@@ -45,5 +49,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.2",
+    "tailwindcss": "^4.0.6"
   }
 }
