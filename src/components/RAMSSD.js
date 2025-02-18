@@ -24,7 +24,7 @@ const RAMSSD = ({ stats, layout }) => {
   const VRamUsed = parseFloat(stats?.ram?.virtual_used) || 0;
   const VRamAvailable = parseFloat(stats?.ram?.virtual_available) || 0;
   const VRamTotal = VRamUsed + VRamAvailable;
-  // console.log('RAMS '  + JSON.stringify(stats?.ram))
+  // //console.log('RAMS '  + JSON.stringify(stats?.ram))
   // {"load":"60.4 %","virtual_load":"63.5 %","used":"19.2 GB","available":"12.6 GB","virtual_used":"24.1 GB","virtual_available":"13.8 GB"}
   const convertSpeedToKbps = (speedStr) => {
     if (!speedStr) return 0;
@@ -61,7 +61,7 @@ const RAMSSD = ({ stats, layout }) => {
   // Inside your component:
   const maxSSDUsage = getMaxSSDUsage(stats.partitions);
 
-  console.log('maxSSDUsage ' + Math.ceil(maxSSDUsage))
+  //console.log('maxSSDUsage ' + Math.ceil(maxSSDUsage))
 
   return (
     <MainCard layout={layout}>

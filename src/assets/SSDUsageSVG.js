@@ -4,7 +4,7 @@ import styled from "styled-components";
 const SSDUsageSVG = ({ usage }) => {
   // Ensure usage stays between 0-100
   const fillPercentage = Math.min(Math.max(usage, 0), 100);
-  console.log("SSD Fill Percentage:", fillPercentage.toFixed(1));
+  //console.log("SSD Fill Percentage:", fillPercentage.toFixed(1));
 
   return (
     <>

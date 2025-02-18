@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const Partitions = ({ stats }) => {
   if (!stats || !stats.partitions) return null;
-  console.log('part stats '  +JSON.stringify(stats.partitions))
+  //console.log('part stats '  +JSON.stringify(stats.partitions))
   return (
     <PartitionContainer>
       {/* <Title>FREE SPACE</Title> */}

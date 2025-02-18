@@ -24,7 +24,7 @@ const CPU = ({ stats, layout }) => {
   }, [stats]);
 
   if (!stats || !stats.cpu) return null;
-console.log('stats.cpu?.Voltages?.length'  + JSON.stringify(stats.cpu))
+//console.log('stats.cpu?.Voltages?.length'  + JSON.stringify(stats.cpu))
   // Extract CPU Data
   const cpuTemp = parseFloat(stats.cpu.temp?.find(t => t.name === "Core Max")?.value) || 0;
   const cpuUsage = parseFloat(stats.cpu.load?.find(l => l.name === "CPU Total")?.value) || 0;

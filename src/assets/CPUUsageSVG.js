@@ -4,7 +4,7 @@ import styled from "styled-components";
 const CPUUsageSVG = ({ usage }) => {
   // Ensure usage stays between 0-100
   const fillPercentage = Math.min(Math.max(usage, 0), 100);
-console.log('fillPercentage.toFixed(1)' + fillPercentage.toFixed(1))
+//console.log('fillPercentage.toFixed(1)' + fillPercentage.toFixed(1))
   return (
     <>
     <SVGContainer>

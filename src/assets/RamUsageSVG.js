@@ -4,7 +4,7 @@ import styled from "styled-components";
 const RamUsageSVG = ({ usage }) => {
   // Ensure usage stays between 0-100
   const fillPercentage = 50;
-  console.log("RAM Fill Percentage:", fillPercentage.toFixed(1));
+  //console.log("RAM Fill Percentage:", fillPercentage.toFixed(1));
 
   return (
     <>

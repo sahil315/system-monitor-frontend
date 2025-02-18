@@ -11,13 +11,13 @@ import { MainCard, MotherboardCard, ImageContainer, StatItem } from "../styles";
 
 
 const Motherboard = ({ stats, layout }) => {
-  console.log('stats?.motherboard?.fans ' + JSON.stringify(stats?.motherboard?.fans[0].value))
+  //console.log('stats?.motherboard?.fans ' + JSON.stringify(stats?.motherboard?.fans[0].value))
   const mainBoardTemp = stats?.motherboard?.temps?.[0]?.value || "N/A";
   const mainVoltage = parseFloat(stats?.motherboard?.voltages?.find(v => v.name.includes("Voltage #1"))?.value) || "N/A";
   const fans = parseFloat(stats?.motherboard?.fans[0]?.value) || 0;
   // const cpuVoltage = parseFloat(stats.cpu.voltage?.find(v => v.name === "CPU Core")?.value) || 0;
   // const gpuFanSpeed = parseFloat(stats?.gpu?.fan_rpm?.find(f => f.name === "GPU Fan")?.value) || 0;
-console.log('stats?.motherboard?.voltages?.map(v => parseFloat(v.Value)) || [] '  +JSON.stringify(stats?.motherboard?.voltages))
+//console.log('stats?.motherboard?.voltages?.map(v => parseFloat(v.Value)) || [] '  +JSON.stringify(stats?.motherboard?.voltages))
   return (
     <MainCard layout={layout}>
       <MotherboardCard layout={layout}>

@@ -53,7 +53,7 @@ const App = () => {
       ws = new WebSocket(`wss://api.pcstats.site`);
 
       ws.onopen = () => {
-        console.log("✅ WebSocket connected.");
+        //console.log("✅ WebSocket connected.");
         setConnectionStatus("Connected.");
         ws.send(JSON.stringify({ api_key: API_KEY })); // Send API key for authentication
       };
@@ -61,7 +61,7 @@ const App = () => {
       ws.onmessage = (event) => {
         try {
           const newData = JSON.parse(event.data);
-          console.log("📡 Received WebSocket data:", newData);
+          //console.log("📡 Received WebSocket data:", newData);
           setStats((prevStats) => ({ ...prevStats, ...newData })); // Merge new values
         } catch (error) {
           console.error("❌ Error parsing WebSocket data:", error);
@@ -85,7 +85,7 @@ const App = () => {
     return () => ws.close();
   }, []);
 
-  console.log('stats43 ', JSON.stringify(stats))
+  //console.log('stats43 ', JSON.stringify(stats))
   if (!stats) {
     return (
       <LoadingContainer>

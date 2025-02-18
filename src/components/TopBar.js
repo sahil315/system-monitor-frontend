@@ -11,7 +11,7 @@ import MonitorUI  from './MonitorUI';
 
 const TopBar = ({ stats, layout }) => {
   const [fps, setFps] = useState(0);
-  console.log("📡 stats data:", stats?.network?.sent);
+  //console.log("📡 stats data:", stats?.network?.sent);
 
   useEffect(() => {
     let lastFrameTime = performance.now();
@@ -57,7 +57,7 @@ const TopBar = ({ stats, layout }) => {
   };
   const gpuFanSpeed = parseFloat(stats?.gpu?.fan_rpm?.find(f => f.name === "GPU Fan")?.value) || 0;
   const cpuFanSpeed = parseFloat(stats?.motherboard?.fans?.[0]?.value) || 0;
-  console.log('stats?.network ' + JSON.stringify(stats?.network))
+  //console.log('stats?.network ' + JSON.stringify(stats?.network))
   return (
     <TopBarContainer>
       {/* Left Stats */}

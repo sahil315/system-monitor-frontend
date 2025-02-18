@@ -111,7 +111,7 @@ const sendDataToBackend = async () => {
         audio: audioDevices,
         fps: fpsData,
     };
-    console.log("✅ Data successfully:", data);
+    //console.log("✅ Data successfully:", data);
 
     try {
         const response = await axios.post(
@@ -120,7 +120,7 @@ const sendDataToBackend = async () => {
             { headers: { "x-api-key": "026bc2a1c84e6efbe769fbba8cb3c6aaafb89cd05d3537314695ba57a3871a66" } }
         );
 
-        console.log("✅ Data sent successfully:", response.data);
+        //console.log("✅ Data sent successfully:", response.data);
     } catch (error) {
         console.error("❌ Failed to send data:", error.response ? error.response.data : error.message);
     }
